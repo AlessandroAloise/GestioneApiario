@@ -6,7 +6,7 @@
 
 Iniziato il: 03.09.20
 
-Data di consegna: 20.12.2020 
+Data di consegna: 17.12.2020 
 
 - [Quaderno dei compiti]
 
