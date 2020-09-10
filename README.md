@@ -10,4 +10,3 @@ Data di consegna: 17.12.2020
 
 - [Quaderno dei compiti]
 
-- [Sito Web]
