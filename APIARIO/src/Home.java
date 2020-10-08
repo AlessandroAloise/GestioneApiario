@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
  */
 public class Home extends javax.swing.JPanel {
     
+    CheckData checkData= new CheckData();
+    
     public void addButton1ActionListener(ActionListener listener) {
     LoginB.addActionListener(listener);
     Register.addActionListener(listener);
@@ -58,6 +60,11 @@ public class Home extends javax.swing.JPanel {
         Register.setForeground(new java.awt.Color(255, 255, 255));
         Register.setText("Registarti");
         Register.setMinimumSize(new java.awt.Dimension(100, 100));
+        Register.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegisterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -109,6 +116,10 @@ public class Home extends javax.swing.JPanel {
             System.out.println("Erorr");
         }*/
     }//GEN-LAST:event_LoginBActionPerformed
+
+    private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RegisterActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

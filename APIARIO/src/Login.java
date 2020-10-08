@@ -4,6 +4,8 @@
  * @version 24.09.2020
  */
 public class Login extends javax.swing.JPanel {
+    
+    CheckData checkData= new CheckData();
 
     /**
      * Creates new form Login
@@ -22,7 +24,6 @@ public class Login extends javax.swing.JPanel {
     private void initComponents() {
 
         Titolo = new javax.swing.JLabel();
-        Min_Titolo = new javax.swing.JLabel();
         User = new javax.swing.JTextField();
         Password = new javax.swing.JPasswordField();
         Accedi = new javax.swing.JButton();
@@ -36,12 +37,14 @@ public class Login extends javax.swing.JPanel {
         Titolo.setText("Login");
         Titolo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        Min_Titolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/ape_8.png"))); // NOI18N
-        Min_Titolo.setText("Apiario");
-
         User.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         User.setText("User");
         User.setToolTipText("");
+        User.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserActionPerformed(evt);
+            }
+        });
 
         Password.setText("Password");
         Password.setToolTipText("");
@@ -59,8 +62,7 @@ public class Login extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Titolo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(Min_Titolo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(wifi))
             .addGroup(layout.createSequentialGroup()
                 .addGap(159, 159, 159)
@@ -73,10 +75,8 @@ public class Login extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Min_Titolo)
-                    .addComponent(wifi))
-                .addGap(61, 61, 61)
+                .addComponent(wifi)
+                .addGap(75, 75, 75)
                 .addComponent(Titolo)
                 .addGap(18, 18, 18)
                 .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -89,17 +89,21 @@ public class Login extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccediActionPerformed
-        this.setVisible(false);
+        String pass =new String(Password.getPassword());
+        checkData.chekRules(User.getText(),pass );
+        
+       
     }//GEN-LAST:event_AccediActionPerformed
+
+    private void UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserActionPerformed
+    }//GEN-LAST:event_UserActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Accedi;
-    private javax.swing.JLabel Min_Titolo;
     private javax.swing.JPasswordField Password;
     private javax.swing.JLabel Titolo;
     private javax.swing.JTextField User;
     private javax.swing.JLabel wifi;
     // End of variables declaration//GEN-END:variables
-    
 }

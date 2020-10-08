@@ -9,9 +9,12 @@
  * @author alessandro.aloise
  */
 public class Register extends javax.swing.JPanel {
-
+    
+    
+    CheckData checkData= new CheckData();
+    
     /**
-     * Creates new form Register
+     * Creates new form Prova
      */
     public Register() {
         initComponents();
@@ -26,19 +29,104 @@ public class Register extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Titolo = new javax.swing.JLabel();
+        acesso = new javax.swing.JButton();
+        Nome = new javax.swing.JTextField();
+        Cognome = new javax.swing.JTextField();
+        Email = new javax.swing.JTextField();
+        Password = new javax.swing.JPasswordField();
+        NomeUtente = new javax.swing.JTextField();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        Titolo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        Titolo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Titolo.setText("REGISTRATI");
+
+        acesso.setText("Accedi");
+        acesso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acessoActionPerformed(evt);
+            }
+        });
+
+        Nome.setText("Nome");
+
+        Cognome.setText("Cognome");
+
+        Email.setText("Email");
+        Email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailActionPerformed(evt);
+            }
+        });
+
+        Password.setText("jPasswordField1");
+
+        NomeUtente.setText("NomeUtente");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(Titolo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(151, 151, 151)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Cognome, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(acesso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                    .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(Email, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Nome, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(NomeUtente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                .addGap(153, 153, 153))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(Titolo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Nome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Cognome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(NomeUtente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(acesso)
+                .addGap(28, 28, 28))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailActionPerformed
+
+    private void acessoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acessoActionPerformed
+        String nome = Nome.getText();
+        String cognome= Cognome.getText();
+        String nomeUtente= NomeUtente.getText();
+        String email= Email.getText();
+        String password =new String(Password.getPassword());
+        if( checkData.register(nome,cognome,nomeUtente,email,password )){
+              checkData.alert("Ti sei registrato corettamente");
+        }else{
+            checkData.alert("Dati non validi ricontrollare");
+        }
+    }//GEN-LAST:event_acessoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Cognome;
+    private javax.swing.JTextField Email;
+    private javax.swing.JTextField Nome;
+    private javax.swing.JTextField NomeUtente;
+    private javax.swing.JPasswordField Password;
+    private javax.swing.JLabel Titolo;
+    private javax.swing.JButton acesso;
     // End of variables declaration//GEN-END:variables
 }

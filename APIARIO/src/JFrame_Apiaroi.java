@@ -16,7 +16,6 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
     public JFrame_Apiaroi() {
         initComponents();
 
-
     }
 
     @SuppressWarnings("unchecked")
@@ -27,20 +26,9 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
         register = new Register();
         home = new Home();
 
-        javax.swing.GroupLayout registerLayout = new javax.swing.GroupLayout(register);
-        register.setLayout(registerLayout);
-        registerLayout.setHorizontalGroup(
-            registerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        registerLayout.setVerticalGroup(
-            registerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Apiario");
-        setBackground(new java.awt.Color(255, 255, 0));
+        setTitle("APIARIO");
+        setBackground(new java.awt.Color(255, 255, 255));
 
         home.setMinimumSize(new java.awt.Dimension(200, 200));
         home.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -56,15 +44,22 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
     private void homePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_homePropertyChange
         home.addButton1ActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.print(e);
-                home.setVisible(false);
-                getContentPane().add(login);
-                login.setVisible(true);
-                validate();
-                System.out.println("cambio"); 
+                if (e.getActionCommand() == "Login") {
+                    home.setVisible(false);
+                    getContentPane().add(login);
+                    login.setVisible(true);
+                    validate();
+                    System.out.println("cambio Login");
+                } else if (e.getActionCommand() == "Registarti") {
+                    home.setVisible(false);
+                    getContentPane().add(register, java.awt.BorderLayout.CENTER);
+                    register.setVisible(true);
+                    validate();
+                    System.out.println("cambio Register");
+                }
+
             }
         });
-
 
 
     }//GEN-LAST:event_homePropertyChange
