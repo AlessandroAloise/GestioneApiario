@@ -31,7 +31,7 @@ public class CheckData {
      */
     public boolean isRegularNameUtente(String name) {
         String expression = "^[a-zA+.+1-9\\s]+"; 
-        return name.matches(expression);        
+        return name.matches(expression);     
     }
     
     /**
@@ -62,6 +62,7 @@ public class CheckData {
      * 
      * @param nome nome utente
      * @param password password dell'utente.
+     * @return 
      */
     public boolean chekRules( String nome, String password){
         if (isRegularNameUtente(nome) && isRegularPassword(password)) {
@@ -83,7 +84,7 @@ public class CheckData {
     }
     
     
-    public void validity(){
+    public void connect(){
         
     }
     

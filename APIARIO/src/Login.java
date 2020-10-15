@@ -1,3 +1,8 @@
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Alessandro Aloise
@@ -5,14 +10,32 @@
  */
 public class Login extends javax.swing.JPanel {
     
-    CheckData checkData= new CheckData();
+    private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    /**
-     * Creates new form Login
-     */
-    public Login() {
+    CheckData checkData = new CheckData();
+    
+
+
+    private void raiseChange() {
+        PropertyChangeEvent event = new PropertyChangeEvent(this, "login",false, true);
+        PropertyChangeListener[] listeners = this.getPropertyChangeListeners();
+        synchronized (listeners) {
+            for (PropertyChangeListener e : listeners) {
+                e.propertyChange(event);
+                
+            }
+        }
+    }
+
+
+/**
+ * Creates new form Login
+ */
+public Login() {
         initComponents();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,6 +114,14 @@ public class Login extends javax.swing.JPanel {
     private void AccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccediActionPerformed
         String pass =new String(Password.getPassword());
         checkData.chekRules(User.getText(),pass );
+        raiseChange();
+        LOGGER.setLevel(Level.SEVERE);
+        LOGGER.severe("Info Log");
+        LOGGER.warning("Info Log");
+        LOGGER.info("Info Log");
+        LOGGER.finest("Really not important");
+        
+       
         
        
     }//GEN-LAST:event_AccediActionPerformed

@@ -25,44 +25,63 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
         login = new Login();
         register = new Register();
         home = new Home();
+        start = new Start();
+
+        login.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                loginPropertyChange(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("APIARIO");
         setBackground(new java.awt.Color(255, 255, 255));
 
-        home.setMinimumSize(new java.awt.Dimension(200, 200));
-        home.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+        start.setMinimumSize(new java.awt.Dimension(200, 200));
+        start.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                homePropertyChange(evt);
+                startPropertyChange(evt);
             }
         });
-        getContentPane().add(home, java.awt.BorderLayout.CENTER);
+        getContentPane().add(start, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void homePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_homePropertyChange
-        home.addButton1ActionListener(new ActionListener() {
+    private void startPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_startPropertyChange
+        start.addButton1ActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getActionCommand() == "Login") {
-                    home.setVisible(false);
+                    start.setVisible(false);
                     getContentPane().add(login);
                     login.setVisible(true);
                     validate();
+                    System.out.println("");
                     System.out.println("cambio Login");
                 } else if (e.getActionCommand() == "Registarti") {
-                    home.setVisible(false);
-                    getContentPane().add(register, java.awt.BorderLayout.CENTER);
+                    start.setVisible(false);
+                    getContentPane().add(register);
                     register.setVisible(true);
                     validate();
                     System.out.println("cambio Register");
                 }
-
             }
         });
 
 
-    }//GEN-LAST:event_homePropertyChange
+    }//GEN-LAST:event_startPropertyChange
+
+    private void loginPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_loginPropertyChange
+        System.out.println(evt.getPropertyName());
+        if ("Login".equals(evt.getPropertyName())) {
+            login.setVisible(false);
+            getContentPane().add(home, java.awt.BorderLayout.CENTER);
+            home.setVisible(true);
+            validate();
+            System.out.println("cambio programma");
+        }
+
+    }//GEN-LAST:event_loginPropertyChange
 
     /**
      * @param args the command line arguments
@@ -104,5 +123,6 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
     private Home home;
     private Login login;
     private Register register;
+    private Start start;
     // End of variables declaration//GEN-END:variables
 }
