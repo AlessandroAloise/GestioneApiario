@@ -92,10 +92,6 @@ public class Start extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LoginBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginBMouseClicked
-
-
-
-
     }//GEN-LAST:event_LoginBMouseClicked
 
     private void LoginBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBActionPerformed

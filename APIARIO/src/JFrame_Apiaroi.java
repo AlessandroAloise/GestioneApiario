@@ -56,7 +56,6 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
                     getContentPane().add(login);
                     login.setVisible(true);
                     validate();
-                    System.out.println("");
                     System.out.println("cambio Login");
                 } else if (e.getActionCommand() == "Registarti") {
                     start.setVisible(false);
@@ -72,8 +71,7 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
     }//GEN-LAST:event_startPropertyChange
 
     private void loginPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_loginPropertyChange
-        System.out.println(evt.getPropertyName());
-        if ("Login".equals(evt.getPropertyName())) {
+        if ("login".equals(evt.getPropertyName())) {
             login.setVisible(false);
             getContentPane().add(home, java.awt.BorderLayout.CENTER);
             home.setVisible(true);

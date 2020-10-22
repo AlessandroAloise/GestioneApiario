@@ -1,8 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+import java.awt.Frame;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -10,14 +9,42 @@
  */
 public class Home extends javax.swing.JPanel {
 
+    private DefaultListModel model = new DefaultListModel<>();
+    public ArrayList list = new ArrayList<>();
+
+    private void riempiList() {
+        list.add("Arine:");
+        list.add("Arine gialla");
+        list.add("Arina vedere");
+        list.add("Arina viola");
+        valida();
+    }
+
+    public void valida() {
+        model.clear();
+        list.stream().forEach((s) -> {
+            model.addElement(s);
+        });
+    }
+
     /**
      * Creates new form Home
      */
     public Home() {
         initComponents();
+     
+        riempiList();
+        arinaList.setModel(model);
+
     }
-    
-        
+
+    public void addList(String arina) {
+        list.add(arina);
+        valida();
+
+        // System.out.println(list);
+        //  System.out.println(model);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,32 +55,38 @@ public class Home extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        menuPrincipale = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        arinaList = new javax.swing.JList<>();
         menu = new javax.swing.JPanel();
-        arnia = new javax.swing.JButton();
+        arniaB = new javax.swing.JButton();
         regina = new javax.swing.JButton();
         trattamenti = new javax.swing.JButton();
         note = new javax.swing.JTextArea();
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
+        menuPrincipale.setLayout(new javax.swing.BoxLayout(menuPrincipale, javax.swing.BoxLayout.Y_AXIS));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        arinaList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Le tue arnie:", " " };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(arinaList);
+        arinaList.getAccessibleContext().setAccessibleParent(null);
 
-        jPanel1.add(jScrollPane1);
+        menuPrincipale.add(jScrollPane1);
 
         menu.setLayout(new java.awt.BorderLayout());
 
-        arnia.setText("agguingi arnia");
-        menu.add(arnia, java.awt.BorderLayout.CENTER);
+        arniaB.setText("agguingi arnia");
+        arniaB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                arniaBActionPerformed(evt);
+            }
+        });
+        menu.add(arniaB, java.awt.BorderLayout.CENTER);
 
         regina.setText("Ape regina");
         menu.add(regina, java.awt.BorderLayout.PAGE_START);
@@ -61,23 +94,39 @@ public class Home extends javax.swing.JPanel {
         trattamenti.setText("Trattamenti");
         menu.add(trattamenti, java.awt.BorderLayout.LINE_END);
 
-        jPanel1.add(menu);
+        menuPrincipale.add(menu);
 
         note.setColumns(20);
         note.setRows(5);
         note.setText("note");
-        jPanel1.add(note);
+        menuPrincipale.add(note);
 
-        add(jPanel1, java.awt.BorderLayout.LINE_START);
+        add(menuPrincipale, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void arniaBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arniaBActionPerformed
+        Frame JFrame_Apiaroi = null;
+        ArniaDialog d = new ArniaDialog(JFrame_Apiaroi);
+        d.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                arinaDialogPropertyChange(evt);
+            }
+        });        
+        d.setVisible(true);
+    }//GEN-LAST:event_arniaBActionPerformed
 
+    private void arinaDialogPropertyChange(java.beans.PropertyChangeEvent evt) {                                         
+        if ("arina".equals(evt.getPropertyName())) {
+           addList((String) evt.getNewValue());
+        }
+    }       
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton arnia;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JList<String> arinaList;
+    private javax.swing.JButton arniaB;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel menu;
+    private javax.swing.JPanel menuPrincipale;
     private javax.swing.JTextArea note;
     private javax.swing.JButton regina;
     private javax.swing.JButton trattamenti;
