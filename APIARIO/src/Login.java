@@ -53,11 +53,6 @@ public Login() {
         User.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         User.setText("User");
         User.setToolTipText("");
-        User.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserActionPerformed(evt);
-            }
-        });
 
         Password.setText("Password");
         Password.setToolTipText("");
@@ -103,12 +98,10 @@ public Login() {
 
     private void AccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccediActionPerformed
         String pass =new String(Password.getPassword());
-        checkData.chekRules(User.getText(),pass );
-        raiseChange();  
+        if(checkData.chekRules(User.getText(),pass )){
+            raiseChange();  
+        }
     }//GEN-LAST:event_AccediActionPerformed
-
-    private void UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserActionPerformed
-    }//GEN-LAST:event_UserActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

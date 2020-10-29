@@ -34,6 +34,7 @@ public class Start extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(100, 100));
+        setPreferredSize(new java.awt.Dimension(550, 298));
 
         Titolo.setBackground(new java.awt.Color(255, 255, 255));
         Titolo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N

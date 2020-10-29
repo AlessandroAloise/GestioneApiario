@@ -66,11 +66,11 @@ public class CheckData {
      */
     public boolean chekRules( String nome, String password){
         if (isRegularNameUtente(nome) && isRegularPassword(password)) {
-            System.out.println("dati valdi");
             return true;
         } else {
             alert("Nome utente o password non validi");
             return false;
+
         }  
     }
     

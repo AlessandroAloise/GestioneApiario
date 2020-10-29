@@ -72,11 +72,14 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
 
     private void loginPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_loginPropertyChange
         if ("login".equals(evt.getPropertyName())) {
-            login.setVisible(false);
-            getContentPane().add(home, java.awt.BorderLayout.CENTER);
-            home.setVisible(true);
-            validate();
-            System.out.println("cambio programma");
+            if ((boolean)evt.getNewValue()) {
+                login.setVisible(false);
+                getContentPane().add(home, java.awt.BorderLayout.CENTER);
+                home.setVisible(true);
+                validate();
+                System.out.println("cambio programma");
+            }
+
         }
 
     }//GEN-LAST:event_loginPropertyChange
