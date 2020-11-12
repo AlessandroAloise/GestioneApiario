@@ -1,5 +1,10 @@
 
+import dbUtil.dbConnection;
 import java.awt.Frame;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
@@ -12,6 +17,7 @@ public class Home extends javax.swing.JPanel {
 
     private DefaultListModel model = new DefaultListModel<>();
     public ArrayList list = new ArrayList<>();
+    Connection connection;
 
     private void riempiList() {
         list.add("Arine:");
@@ -36,6 +42,14 @@ public class Home extends javax.swing.JPanel {
 
         riempiList();
         arinaList.setModel(model);
+        try {
+            this.connection = dbConnection.getConnection();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        if (connection == null) {
+            System.exit(1);
+        }
 
     }
 
@@ -43,6 +57,7 @@ public class Home extends javax.swing.JPanel {
         list.add(arina);
         valida();
     }
+
 
 
     @SuppressWarnings("unchecked")

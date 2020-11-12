@@ -90,9 +90,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Email"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EmailActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="Password">
       <Properties>
@@ -101,7 +98,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="NomeUtente">
       <Properties>
-        <Property name="text" type="java.lang.String" value="NomeUtente"/>
+        <Property name="text" type="java.lang.String" value="nome.cognome"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -1,7 +1,11 @@
+
+import dbUtil.dbConnection;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -9,29 +13,61 @@ import java.util.logging.Logger;
  * @version 24.09.2020
  */
 public class Login extends javax.swing.JPanel {
-    CheckData checkData = new CheckData();
-    
+    String utente="";
 
+    CheckData checkData = new CheckData();
+    Connection connection;
+
+    /**
+     * Creates new form Login
+     */
+    public Login() {
+        initComponents();
+        try {
+            this.connection = dbConnection.getConnection();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        if (connection == null) {
+            System.exit(1);
+        }
+
+    }
+
+    public boolean isLogin(String user, String password) {
+        PreparedStatement pr = null;
+        ResultSet rs = null;
+
+        String sql = "SELECT * FROM utenti where username =? and password = ? ";
+
+        try {
+            pr = connection.prepareStatement(sql);
+            pr.setString(1, user);
+            pr.setString(2, password);
+
+            rs = pr.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+            return false;
+
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 
     private void raiseChange() {
-        PropertyChangeEvent event = new PropertyChangeEvent(this,"login",false, true);
+        PropertyChangeEvent event = new PropertyChangeEvent(this, "login", false, true);
         PropertyChangeListener[] listeners = this.getPropertyChangeListeners();
         synchronized (listeners) {
             for (PropertyChangeListener e : listeners) {
                 e.propertyChange(event);
-                
+
             }
         }
     }
 
-/**
- * Creates new form Login
- */
-public Login() {
-        initComponents();
-    }
-    
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -97,9 +133,13 @@ public Login() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AccediActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccediActionPerformed
-        String pass =new String(Password.getPassword());
-        if(checkData.chekRules(User.getText(),pass )){
-            raiseChange();  
+        String pass = new String(Password.getPassword());
+        if (checkData.chekRules(User.getText(), pass)) {
+            if (isLogin(User.getText(), pass)) {
+                System.out.println("conesso al db");
+                utente=User.getText();
+                raiseChange();
+            }
         }
     }//GEN-LAST:event_AccediActionPerformed
 
