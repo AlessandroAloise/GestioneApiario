@@ -1,5 +1,7 @@
 
 import java.awt.event.ActionListener;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Panel che si occupa della home.
@@ -8,14 +10,14 @@ import java.awt.event.ActionListener;
  * @version 24.09.2020
  */
 public class Start extends javax.swing.JPanel {
-    
-    CheckData checkData= new CheckData();
-    
+
+    CheckData checkData = new CheckData();
+
     public void addButton1ActionListener(ActionListener listener) {
         LoginB.addActionListener(listener);
         Register.addActionListener(listener);
     }
-    
+
     /**
      * Creates new form Home
      */
@@ -23,8 +25,7 @@ public class Start extends javax.swing.JPanel {
         initComponents();
     }
 
-    
-    @SuppressWarnings("unchecked")
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -96,12 +97,8 @@ public class Start extends javax.swing.JPanel {
     }//GEN-LAST:event_LoginBMouseClicked
 
     private void LoginBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBActionPerformed
-
-                 
-        
-         /*
-        try {
-            URL url = new URL("https://www.google.ch/?hl=it");
+        /*try {
+            URL url = new URL("https://www.bing.com/");
 
             URLConnection connection = url.openConnection();
             connection.connect();

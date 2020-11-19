@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,9 +52,8 @@ public class Register extends javax.swing.JPanel {
         } catch (SQLException ex) {
             return false;
         }
-        
+
     }
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -135,6 +136,11 @@ public class Register extends javax.swing.JPanel {
         if (checkData.register(nome, cognome, nomeUtente, email, password)) {
             if (isRegister(nomeUtente, password, email)) {
                 checkData.alert("Ti sei registrato corettamente");
+                try {
+                    connection.commit();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } else {
             checkData.alert("Dati non validi ricontrollare");

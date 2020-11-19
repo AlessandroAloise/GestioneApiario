@@ -1,4 +1,3 @@
-
 import dbUtil.dbConnection;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -6,6 +5,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -13,10 +14,12 @@ import java.sql.ResultSet;
  * @version 24.09.2020
  */
 public class Login extends javax.swing.JPanel {
-    String utente="";
+    public int idUtenteDb=0;
 
     CheckData checkData = new CheckData();
     Connection connection;
+    private PreparedStatement pr = null;
+    private ResultSet rs = null;
 
     /**
      * Creates new form Login
@@ -35,15 +38,13 @@ public class Login extends javax.swing.JPanel {
     }
 
     public boolean isLogin(String user, String password) {
-        PreparedStatement pr = null;
-        ResultSet rs = null;
-
         String sql = "SELECT * FROM utenti where username =? and password = ? ";
 
         try {
             pr = connection.prepareStatement(sql);
             pr.setString(1, user);
             pr.setString(2, password);
+            utente(user);
 
             rs = pr.executeQuery();
 
@@ -54,6 +55,23 @@ public class Login extends javax.swing.JPanel {
 
         } catch (SQLException ex) {
             return false;
+        }
+    }
+    
+    
+    public void utente(String user) {
+        String sql = "SELECT id FROM utenti where username =? ";
+
+        try {
+            pr = connection.prepareStatement(sql);
+            pr.setString(1, user);
+
+            rs = pr.executeQuery();
+            while (rs.next()) {
+                idUtenteDb=(rs.getInt("id"));                      
+            } 
+        } catch (SQLException ex) {
+            System.out.println("error"+ ex);
         }
     }
 
@@ -67,7 +85,12 @@ public class Login extends javax.swing.JPanel {
             }
         }
     }
-
+    
+    
+    public int getUtente(){
+        return idUtenteDb;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -137,8 +160,14 @@ public class Login extends javax.swing.JPanel {
         if (checkData.chekRules(User.getText(), pass)) {
             if (isLogin(User.getText(), pass)) {
                 System.out.println("conesso al db");
-                utente=User.getText();
                 raiseChange();
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                checkData.alert("Nome utente o password sbagliati");
             }
         }
     }//GEN-LAST:event_AccediActionPerformed
