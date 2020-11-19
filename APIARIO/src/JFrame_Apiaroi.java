@@ -56,13 +56,11 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
                     getContentPane().add(login);
                     login.setVisible(true);
                     validate();
-                    System.out.println("cambio Login");
                 } else if (e.getActionCommand() == "Registarti") {
                     start.setVisible(false);
                     getContentPane().add(register);
                     register.setVisible(true);
                     validate();
-                    System.out.println("cambio Register");
                 }
             }
         });
@@ -77,7 +75,6 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
                 getContentPane().add(home, java.awt.BorderLayout.CENTER);
                 home.setVisible(true);
                 validate();
-                System.out.println("cambio programma");
             }
 
         }
