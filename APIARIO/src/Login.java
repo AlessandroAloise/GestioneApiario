@@ -14,8 +14,7 @@ import java.util.logging.Logger;
  * @version 24.09.2020
  */
 public class Login extends javax.swing.JPanel {
-    public int idUtenteDb=0;
-
+    public int idUtenteDb;
     CheckData checkData = new CheckData();
     Connection connection;
     private PreparedStatement pr = null;
@@ -37,6 +36,13 @@ public class Login extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Metodo che si occupa di controllare se l'utente che si sta loggando eiste.
+     * 
+     * @param user nome utente.
+     * @param password password del nome utente
+     * @return ritorna un flag true se si può loggare e false se non può.
+     */
     public boolean isLogin(String user, String password) {
         String sql = "SELECT * FROM utenti where username =? and password = ? ";
 
@@ -58,25 +64,25 @@ public class Login extends javax.swing.JPanel {
         }
     }
     
-    
+    /**
+     * Metodo che permette di selezionare l'id del utente che si vuole.
+     * @param user nome utente di chi si logga.
+     */
     public void utente(String user) {
         String sql = "SELECT id FROM utenti where username =? ";
 
         try {
             pr = connection.prepareStatement(sql);
             pr.setString(1, user);
-
             rs = pr.executeQuery();
-            while (rs.next()) {
-                idUtenteDb=(rs.getInt("id"));                      
-            } 
+            idUtenteDb=(rs.getInt("id")); 
         } catch (SQLException ex) {
             System.out.println("error"+ ex);
         }
     }
 
-    private void raiseChange() {
-        PropertyChangeEvent event = new PropertyChangeEvent(this, "login", false, true);
+    public void raiseChange() {
+        PropertyChangeEvent event = new PropertyChangeEvent(this, "login", getUtente(), true);
         PropertyChangeListener[] listeners = this.getPropertyChangeListeners();
         synchronized (listeners) {
             for (PropertyChangeListener e : listeners) {
@@ -87,6 +93,13 @@ public class Login extends javax.swing.JPanel {
     }
     
     
+    
+    
+    /**
+     * Metodo che ci permette di ricavare l'id.
+     * 
+     * @return id del nome utente.
+     */
     public int getUtente(){
         return idUtenteDb;
     }
@@ -109,11 +122,11 @@ public class Login extends javax.swing.JPanel {
         Titolo.setText("Login");
         Titolo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        User.setText("ale");
         User.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        User.setText("User");
         User.setToolTipText("");
 
-        Password.setText("Password");
+        Password.setText("Ciao12345");
         Password.setToolTipText("");
 
         Accedi.setText("Accedi");

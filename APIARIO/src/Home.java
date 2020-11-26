@@ -1,8 +1,6 @@
-
 import dbUtil.dbConnection;
 import java.awt.Frame;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,22 +11,24 @@ import javax.swing.DefaultListModel;
 
 /**
  *
- * @author alessandro.aloise
  *
+ * @author alessandro.aloise
+ * @version 26.11.2020
  */
 public class Home extends javax.swing.JPanel {
-    
     CheckData checkData = new CheckData();
     public Frame JFrame_Apiaroi = null;
     public AddArnia arina = new AddArnia(JFrame_Apiaroi);
     public AddRegina reginaP = new AddRegina(JFrame_Apiaroi);
     public String[] valoriN = new String[3];
+
     private DefaultListModel model = new DefaultListModel<>();
     public ArrayList list = new ArrayList<>();
     Connection connection;
-    
-    
-    private  PreparedStatement pr = null;
+    private int idRegina;
+    public int idUtente;
+
+    private PreparedStatement pr = null;
     private ResultSet rs = null;
 
     /**
@@ -36,82 +36,85 @@ public class Home extends javax.swing.JPanel {
      */
     public Home() {
         initComponents();
-
-        riempiList();
-        arinaList.setModel(model);
         try {
             this.connection = dbConnection.getConnection();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         if (connection == null) {
-            System.exit(1);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, "Errore di connessione");
         }
+        System.out.println(idUtente);
+        riempiList();
+        arinaList.setModel(model);
 
     }
 
-    private void riempiList() {
-        list.add("Arine:");
-        list.add("Arine gialla");
-        list.add("Arina vedere");
-        list.add("Arina viola");
-        //list.add(selctArnia("1"));
-        valida();
-    }
-
-    public void valida() {
-        model.clear();
-        list.stream().forEach((s) -> {
-            model.addElement(s);
-        });
-    }
-
-    public String selctArnia(String user) {
-        String sql = "select nome from arnia where id = ?;";
+    /**
+     * Metodo che si occupa di selezionare tutte le arine di un utente.
+     *
+     * @param user utente che sta richiedendo le sue arine.
+     */
+    public void selctArnia(int user) {
+        String sql = "select nome from arnia where id_utente = ?";
 
         try {
             pr = connection.prepareStatement(sql);
-            pr.setString(1, user);
-
+            pr.setInt(1, user);
             rs = pr.executeQuery();
             while (rs.next()) {
                 System.out.println(rs.getString("nome"));
-                //return rs.getString("nome");
-            }
-
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                addList(rs.getString("nome"));
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("error" + ex);
         }
-        return "";
     }
 
+    /**
+     * Metodo che inserisce le arine nel db con l'id del utente.
+     */
     public void arine() {
         String sql = "INSERT INTO arnia(abitata,id_utente, nome) values (?,?,?)";
-
+        System.out.println(idUtente);
         try {
             pr = connection.prepareStatement(sql);
             pr.setString(1, "true");
-            pr.setString(2, "1");
+            pr.setInt(2, idUtente);
             pr.setString(3, valoriN[0]);
 
             pr.executeUpdate();
-
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
         } catch (SQLException ex) {
             System.out.println("error: " + ex);
         }
     }
 
+    /**
+     * Metodo che si occupa di cerca una regina tramite la sua data di nascita.
+     *
+     * @param data Data di nascita della regina.
+     */
+    public void selctReginaId(String data) {
+        String sql = "select id from regina where data = ?";
+
+        try {
+            pr = connection.prepareStatement(sql);
+            pr.setString(1, data);
+            rs = pr.executeQuery();
+            idRegina = rs.getInt("id");
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error" + ex);
+        }
+    }
+
+    /**
+     * Metodo che permette di aggiungere una regina alla propria arina.
+     *
+     * @param dataR data di nascita della regina
+     */
     public void addRegina(String dataR) {
         String sql = "INSERT INTO regina(data) values (?)";
 
@@ -119,24 +122,19 @@ public class Home extends javax.swing.JPanel {
             pr = connection.prepareStatement(sql);
             pr.setString(1, dataR);
             pr.executeUpdate();
-
-            try {
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
         } catch (SQLException ex) {
             System.out.println("error: " + ex);
         }
     }
 
-    public void addList(String arina) {
-        list.add(arina);
-        valida();
-    }
-    
-    public boolean controlloArina(String arina){
+    /**
+     * Metodo che controlla se l'arina indicata esiste.
+     *
+     * @param arina nome arina
+     * @return ritorna un flag true se l'arina indicata esiste e false se non
+     * esiste.
+     */
+    public boolean controlloArina(String arina) {
         String sql = "SELECT * FROM arnia where nome =? ";
 
         try {
@@ -144,15 +142,60 @@ public class Home extends javax.swing.JPanel {
             pr.setString(1, arina);
 
             rs = pr.executeQuery();
-            
+
             if (rs.next()) {
                 return true;
             }
             return false;
 
         } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    public void aggiornametoArina(String nome, int id) {
+        String sql = "UPDATE arnia SET id_regina = ? where nome = ? & id=?";
+
+        try {
+            pr = connection.prepareStatement(sql);
+            pr.setInt(1, idRegina);
+            pr.setString(2, nome);
+            pr.setInt(3, id);
+            pr.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("error: " + ex);
+        }
+    }
+
+    /**
+     * Metodo che permette di aggiungere un arina alla lista che si vede.
+     *
+     * @param arina arina da aggiungere.
+     */
+    public void addList(String arina) {
+        list.add(arina);
+        valida();
+    }
+
+    /**
+     * Metodo che si occupa di riempire la lista delle arine.
+     */
+    private void riempiList() {
+        list.add("Arine:");
+        selctArnia(idUtente);
+        valida();
+    }
+
+    /**
+     * Metodo che si occupa di validare la lista.
+     */
+    public void valida() {
+        model.clear();
+        list.stream().forEach((s) -> {
+            model.addElement(s);
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -247,12 +290,14 @@ public class Home extends javax.swing.JPanel {
 
     private void reginaDialogPropertyChange(java.beans.PropertyChangeEvent evt) {
         if ("regina".equals(evt.getPropertyName())) {
-                String arinaUtente= reginaP.getNomeArina();
-                if(controlloArina(arinaUtente)){
-                    addRegina(evt.getNewValue().toString());
-                }else{
-                    checkData.alert("Nome arina sbagliato");
-                }
+            String arinaUtente = reginaP.getNomeArina();
+            if (controlloArina(arinaUtente)) {
+                addRegina(evt.getNewValue().toString());
+                selctReginaId(evt.getNewValue().toString());
+                aggiornametoArina(arinaUtente, idUtente);
+            } else {
+                checkData.alert("Nome arina sbagliato");
+            }
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

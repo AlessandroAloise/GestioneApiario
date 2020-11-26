@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
  * @version 24.09.2020
  */
 public class JFrame_Apiaroi extends javax.swing.JFrame {
+    
+    public int id;
 
     /**
      * Creates new form JFrame_Apiaroi
@@ -71,6 +73,8 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
     private void loginPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_loginPropertyChange
         if ("login".equals(evt.getPropertyName())) {
             if ((boolean)evt.getNewValue()) {
+                id =login.getUtente();
+                home.idUtente = id;
                 login.setVisible(false);
                 getContentPane().add(home, java.awt.BorderLayout.CENTER);
                 home.setVisible(true);
