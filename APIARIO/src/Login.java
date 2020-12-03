@@ -116,14 +116,14 @@ public class Login extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        Titolo.setBackground(new java.awt.Color(255, 255, 255));
-        Titolo.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         Titolo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Titolo.setText("Login");
+        Titolo.setBackground(new java.awt.Color(255, 255, 255));
+        Titolo.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         Titolo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        User.setText("ale");
         User.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        User.setText("ale");
         User.setToolTipText("");
 
         Password.setText("Ciao12345");
@@ -158,13 +158,13 @@ public class Login extends javax.swing.JPanel {
                 .addComponent(wifi)
                 .addGap(75, 75, 75)
                 .addComponent(Titolo)
-                .addGap(18, 18, 18)
+                .addGap(39, 39, 39)
                 .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
                 .addComponent(Accedi)
-                .addGap(59, 59, 59))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

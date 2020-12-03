@@ -74,7 +74,7 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
         if ("login".equals(evt.getPropertyName())) {
             if ((boolean)evt.getNewValue()) {
                 id =login.getUtente();
-                home.idUtente = id;
+                home.setUserId(id);
                 login.setVisible(false);
                 getContentPane().add(home, java.awt.BorderLayout.CENTER);
                 home.setVisible(true);

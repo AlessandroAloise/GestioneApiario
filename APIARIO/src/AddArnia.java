@@ -30,7 +30,11 @@ public class AddArnia extends javax.swing.JDialog {
     public void setValori() {
         valori[0] = testo.getText();
         valori[1] = tLocalita.getText();
-        valori[2] = abitata.getText();
+        if(abitata.isSelected()){
+            valori[2] = "true"; 
+        }else{
+            valori[2] = "false";
+        }
        
     }
 
