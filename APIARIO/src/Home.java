@@ -1,6 +1,12 @@
 
 import dbUtil.dbConnection;
 import java.awt.Frame;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -89,12 +95,13 @@ public class Home extends javax.swing.JPanel {
      * Metodo che inserisce le arine nel db con l'id del utente.
      */
     public void arine() {
-        String sql = "INSERT INTO arnia(abitata,id_utente, nome) values (?,?,?)";
+        String sql = "INSERT INTO arnia(abitata,id_utente, nome, località) values (?,?,?,?)";
         try {
             pr = connection.prepareStatement(sql);
             pr.setString(1, valoriN[2]);
             pr.setInt(2, idUtente);
             pr.setString(3, valoriN[0]);
+            pr.setString(4, valoriN[1]);
 
             pr.executeUpdate();
 
@@ -205,6 +212,21 @@ public class Home extends javax.swing.JPanel {
             System.out.println("error: " + ex);
         }
         note.setText("");
+    }
+
+    public void remArnia() {
+        String sql = "DELETE FROM arnia where id_utente = ? and nome =? ";
+
+        try {
+            pr = connection.prepareStatement(sql);
+            pr.setInt(1, idUtente);
+            pr.setString(2, arinaList.getSelectedValue());
+
+            pr.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -215,6 +237,11 @@ public class Home extends javax.swing.JPanel {
      */
     public void addList(String arina) {
         list.add(arina);
+        valida();
+    }
+
+    public void remList() {
+        list.remove(arinaList.getSelectedValue());
         valida();
     }
 
@@ -273,12 +300,44 @@ public class Home extends javax.swing.JPanel {
                 rs = pr.executeQuery();
                 String nota = "Fine trattamento: ";
                 while (rs.next()) {
-                    note.append(nota +rs.getString("nome_trattamento"));
+                    note.append(nota + rs.getString("nome_trattamento"));
                 }
 
             } catch (SQLException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+
+    }
+
+    public void newMeteo() {
+        String posizione = "";
+        String sql = "SELECT località FROM arnia where nome = ?and id_utente = ?";
+
+        try {
+            pr = connection.prepareStatement(sql);
+            pr.setString(1, arinaList.getSelectedValue());
+            pr.setInt(2, idUtente);
+
+            rs = pr.executeQuery();
+            posizione = rs.getString("località");
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            URL url = new URL("http://pro.openweathermap.org/data/2.5/forecast/hourly?q="+posizione+",us&mode=json & appid = 2aef2d1da7628b1200873fc839d8cc5a");
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            BufferedReader read = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+
+            while ((line = read.readLine()) != null) {
+                System.out.println(line);
+            }
+
+        } catch (IllegalArgumentException | IOException  ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -296,6 +355,8 @@ public class Home extends javax.swing.JPanel {
         arniaB = new javax.swing.JButton();
         regina = new javax.swing.JButton();
         trattamenti = new javax.swing.JButton();
+        remArniaB = new javax.swing.JButton();
+        meteo = new javax.swing.JButton();
         calendarioJ = new javax.swing.JPanel();
         noteJpanel = new javax.swing.JPanel();
         note = new javax.swing.JTextArea();
@@ -352,6 +413,22 @@ public class Home extends javax.swing.JPanel {
             }
         });
         menu.add(trattamenti, java.awt.BorderLayout.LINE_END);
+
+        remArniaB.setText("Rimuovi arina");
+        remArniaB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                remArniaBActionPerformed(evt);
+            }
+        });
+        menu.add(remArniaB, java.awt.BorderLayout.PAGE_END);
+
+        meteo.setText("Meteo");
+        meteo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                meteoActionPerformed(evt);
+            }
+        });
+        menu.add(meteo, java.awt.BorderLayout.LINE_START);
 
         menuPrincipale.add(menu);
 
@@ -427,6 +504,15 @@ public class Home extends javax.swing.JPanel {
         trattamento.setVisible(true);
     }//GEN-LAST:event_trattamentiActionPerformed
 
+    private void remArniaBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_remArniaBActionPerformed
+        remArnia();
+        remList();
+    }//GEN-LAST:event_remArniaBActionPerformed
+
+    private void meteoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meteoActionPerformed
+        newMeteo();
+    }//GEN-LAST:event_meteoActionPerformed
+
     private void arinaDialogPropertyChange(java.beans.PropertyChangeEvent evt) {
         if ("arina".equals(evt.getPropertyName())) {
             for (int i = 0; i < 3; i++) {
@@ -470,10 +556,12 @@ public class Home extends javax.swing.JPanel {
     private javax.swing.JLabel leTueArine;
     private javax.swing.JPanel menu;
     private javax.swing.JPanel menuPrincipale;
+    private javax.swing.JButton meteo;
     private javax.swing.JTextArea note;
     private javax.swing.JLabel noteJ;
     private javax.swing.JPanel noteJpanel;
     private javax.swing.JButton regina;
+    private javax.swing.JButton remArniaB;
     private javax.swing.JButton salvaNota;
     private javax.swing.JButton trattamenti;
     // End of variables declaration//GEN-END:variables
