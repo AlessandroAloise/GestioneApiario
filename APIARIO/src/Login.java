@@ -1,4 +1,3 @@
-
 import dbUtil.dbConnection;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -15,7 +14,6 @@ import java.util.logging.Logger;
  * @version 24.09.2020
  */
 public class Login extends javax.swing.JPanel {
-
     public int idUtenteDb;
     CheckData checkData = new CheckData();
     Connection connection;
@@ -23,7 +21,7 @@ public class Login extends javax.swing.JPanel {
     private ResultSet rs = null;
 
     /**
-     * Metodo costruttore della classe.
+     * Creates new form Login
      */
     public Login() {
         initComponents();
@@ -39,9 +37,8 @@ public class Login extends javax.swing.JPanel {
     }
 
     /**
-     * Metodo che si occupa di controllare se l'utente che si sta loggando
-     * eiste.
-     *
+     * Metodo che si occupa di controllare se l'utente che si sta loggando eiste.
+     * 
      * @param user nome utente.
      * @param password password del nome utente
      * @return ritorna un flag true se si può loggare e false se non può.
@@ -66,10 +63,10 @@ public class Login extends javax.swing.JPanel {
             return false;
         }
     }
-
+    
     /**
      * Metodo che permette di selezionare l'id del utente che si vuole.
-     *
+     * 
      * @param user nome utente di chi si logga.
      */
     public void utente(String user) {
@@ -79,9 +76,9 @@ public class Login extends javax.swing.JPanel {
             pr = connection.prepareStatement(sql);
             pr.setString(1, user);
             rs = pr.executeQuery();
-            idUtenteDb = (rs.getInt("id"));
+            idUtenteDb=(rs.getInt("id")); 
         } catch (SQLException ex) {
-            System.out.println("error" + ex);
+            System.out.println("error"+ ex);
         }
     }
 
@@ -95,16 +92,19 @@ public class Login extends javax.swing.JPanel {
             }
         }
     }
-
+    
+    
+    
+    
     /**
      * Metodo che ci permette di ricavare l'id.
-     *
+     * 
      * @return id del nome utente.
      */
-    public int getUtente() {
+    public int getUtente(){
         return idUtenteDb;
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -180,7 +180,7 @@ public class Login extends javax.swing.JPanel {
                 } catch (SQLException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } else {
+            }else{
                 checkData.alert("Nome utente o password sbagliati");
             }
         }

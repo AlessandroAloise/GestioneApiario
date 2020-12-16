@@ -9,9 +9,8 @@ import java.util.logging.Logger;
 
 /**
  * Clasee che controlla se l'utente é registrato.
- * 
- * @author Alessandro.Aloise
- * @version 16.12.2020
+ *
+ * @author alessandro.aloise
  */
 public class Register extends javax.swing.JPanel {
 
@@ -26,7 +25,7 @@ public class Register extends javax.swing.JPanel {
     CheckData checkData = new CheckData();
 
     /**
-     * MEtodo costruttore.
+     * Creates new form Prova
      */
     public Register() {
         initComponents();
