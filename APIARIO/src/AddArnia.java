@@ -3,10 +3,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * Schermata di dialogo per aggiungere un arina.
+ * Schermata di dialogo per aggiungere un arina
  *
  * @author alessandro.aloise
- * @version 17.12.2020
+ * @version 17.12.2020  
  */
 public class AddArnia extends javax.swing.JDialog {
 
@@ -17,7 +17,8 @@ public class AddArnia extends javax.swing.JDialog {
 
     /**
      * Metodo costruttore
-     * @param parent 
+     *
+     * @param parent
      */
     public AddArnia(java.awt.Frame parent) {
         super(parent);
@@ -43,17 +44,17 @@ public class AddArnia extends javax.swing.JDialog {
     public void setValori() {
         valori[0] = testo.getText();
         valori[1] = tLocalita.getText();
-        if(abitata.isSelected()){
-            valori[2] = "true"; 
-        }else{
+        if (abitata.isSelected()) {
+            valori[2] = "true";
+        } else {
             valori[2] = "false";
         }
-       
+
     }
 
     /**
      * Getter per l'array.
-     * 
+     *
      * @param indice indice che ci serve conoscere dell'array.
      * @return valore all'indice indicato.
      */
@@ -136,8 +137,9 @@ public class AddArnia extends javax.swing.JDialog {
     }//GEN-LAST:event_invioActionPerformed
 
     /**
+     * /**
      * Main della applicazione.
-     * 
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
