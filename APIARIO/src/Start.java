@@ -9,10 +9,8 @@ import java.awt.event.ActionListener;
  */
 public class Start extends javax.swing.JPanel {
 
-    /**
-     * Generatore di eventi.
-     * @param listener 
-     */
+    CheckData checkData = new CheckData();
+
     public void addButton1ActionListener(ActionListener listener) {
         LoginB.addActionListener(listener);
         Register.addActionListener(listener);
