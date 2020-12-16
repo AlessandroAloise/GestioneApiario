@@ -6,8 +6,8 @@ import java.sql.DriverManager;
 
 /**
  * Classe per collegrsi la db.
- * 
- * @author Alessandro.Aloise
+ *
+ * @author Alesssandro Aloise
  * @version 16.12.2020
  */
 public class dbConnection {
