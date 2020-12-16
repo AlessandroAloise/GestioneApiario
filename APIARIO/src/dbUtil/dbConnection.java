@@ -5,8 +5,10 @@ import java.sql.SQLException;
 import java.sql.DriverManager;
 
 /**
- *
- * @author Alesssandro Aloise
+ * Classe per collegrsi la db.
+ * 
+ * @author Alessandro.Aloise
+ * @version 16.12.2020
  */
 public class dbConnection {
     

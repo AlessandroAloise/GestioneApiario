@@ -3,20 +3,30 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * Schermata di dialogo per aggiungere un arina
+ * Schermata di dialogo per aggiungere un arina.
  *
  * @author alessandro.aloise
- * @version 29.10.2020
+ * @version 17.12.2020
  */
 public class AddArnia extends javax.swing.JDialog {
 
+    /**
+     * Array che contrienie i valori.
+     */
     public String[] valori = new String[3];
 
+    /**
+     * Metodo costruttore
+     * @param parent 
+     */
     public AddArnia(java.awt.Frame parent) {
         super(parent);
         initComponents();
     }
 
+    /**
+     * Metodo che si occupa di controllare se ci sono state modifiche.
+     */
     private void raiseChange() {
         PropertyChangeEvent event = new PropertyChangeEvent(this, "arina", false, testo.getText());
         PropertyChangeListener[] listeners = this.getPropertyChangeListeners();
@@ -27,6 +37,9 @@ public class AddArnia extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * Metodo che imposta i valri all'interno dell'array.
+     */
     public void setValori() {
         valori[0] = testo.getText();
         valori[1] = tLocalita.getText();
@@ -38,6 +51,12 @@ public class AddArnia extends javax.swing.JDialog {
        
     }
 
+    /**
+     * Getter per l'array.
+     * 
+     * @param indice indice che ci serve conoscere dell'array.
+     * @return valore all'indice indicato.
+     */
     public String getValori(int indice) {
         return valori[indice];
     }
@@ -117,36 +136,11 @@ public class AddArnia extends javax.swing.JDialog {
     }//GEN-LAST:event_invioActionPerformed
 
     /**
+     * Main della applicazione.
+     * 
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddArnia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddArnia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddArnia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddArnia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AddArnia dialog = new AddArnia(new javax.swing.JFrame());

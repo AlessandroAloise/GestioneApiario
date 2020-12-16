@@ -1,3 +1,4 @@
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -15,7 +16,14 @@ import java.net.URLConnection;
  */
 public class JFrame_Apiaroi extends javax.swing.JFrame {
 
+    /**
+     * Variabile per id utente.
+     */
     public int id;
+    
+    /**
+     * Dichiarazione di un istantza di una classe utile.
+     */
     CheckData checkData = new CheckData();
 
     /**
@@ -27,7 +35,10 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
 
     }
 
-public void connessione() {
+    /**
+     * Metodo che si occupa di controolare se il dispositivo su qui sta girando l'applicazione a internet.
+     */
+    public void connessione() {
         try {
             URL url = new URL("http://www.google.com");
             URLConnection connection = url.openConnection();
@@ -36,19 +47,21 @@ public void connessione() {
         } catch (MalformedURLException e) {
             checkData.alert("ATTENZIONE NON CONESSO A INTERNET" + '\n'
                     + "Il programma funzionerà solo se lo avevi già avviato con internet"
-                    +'\n'
+                    + '\n'
                     + "Il programma salverà solo le informazioni in locale"
             );
         } catch (IOException e) {
             checkData.alert("ATTENZIONE NON CONESSO A INTERNET" + '\n'
                     + "Il programma funzionerà solo se lo avevi già avviato con internet"
-                    +'\n'
+                    + '\n'
                     + "Il programma salverà solo le informazioni in locale"
             );
         }
     }
 
-
+    /**
+     * Metodo che serve a scaricare il db dal sito ogni volta che si avvia l'applicazione
+     */
     public void scaricaDB() {
         try ( BufferedInputStream in = new BufferedInputStream(new URL("http://samtinfo.ch/i17aloale/up/Apiario.sqlite").openStream());  FileOutputStream fileOutputStream = new FileOutputStream("Apiario.sqlite")) {
             byte dataBuffer[] = new byte[1024];
@@ -57,7 +70,7 @@ public void connessione() {
                 fileOutputStream.write(dataBuffer, 0, bytesRead);
             }
         } catch (IOException e) {
-            System.out.println("non va");
+            System.out.println("Error");
         }
     }
 
@@ -92,6 +105,9 @@ public void connessione() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_startPropertyChange
+        /*
+         * Controlla quale tasto é stato premuto e in base a quello esegue del codice diverso.
+         */
         start.addButton1ActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getActionCommand() == "Login") {
@@ -112,6 +128,9 @@ public void connessione() {
     }//GEN-LAST:event_startPropertyChange
 
     private void loginPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_loginPropertyChange
+        /*
+         * Controlla se il tasto login é cliccato allora viene chiamato in causa.
+         */
         if ("login".equals(evt.getPropertyName())) {
             if ((boolean) evt.getNewValue()) {
                 id = login.getUtente();
@@ -127,14 +146,10 @@ public void connessione() {
     }//GEN-LAST:event_loginPropertyChange
 
     /**
+     * Main della applicazione.
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -151,8 +166,6 @@ public void connessione() {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JFrame_Apiaroi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new JFrame_Apiaroi().setVisible(true);

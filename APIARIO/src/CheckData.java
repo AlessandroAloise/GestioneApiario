@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * Classe che si occupa di verificare i dati.
  * 
  * @author alessandro.aloise
- * @version 08.10.2020
+ * @version 17.12.2020
  */
 public class CheckData {
 
@@ -47,6 +47,12 @@ public class CheckData {
     
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX =  Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     
+    /**
+     * Controlla con un espressione regolare se la email  rispetta i parametri messi.
+     * 
+     * @param emailStr email da controllare
+     * @return true se la email va bene oppure false se la password non va bene.
+     */
     private boolean isRegularEmail(String emailStr) {
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
         return matcher.find();
@@ -74,7 +80,16 @@ public class CheckData {
         }  
     }
     
-    
+    /**
+     * Creazione dell'utente.
+     * 
+     * @param nome Nome della persona.
+     * @param cognome Cognome della persona.
+     * @param nomeUtente Nome utente.
+     * @param email Email dell'utente.
+     * @param password password dell'utente.
+     * @return  ritorna true se l'account rispetta i paramentri false se non lo fa.
+     */
     public boolean register(String nome, String cognome, String nomeUtente, String email, String password){
         if( isRegularName(nome)== true &&isRegularName(cognome)== true &&  isRegularNameUtente(nomeUtente)== true && isRegularEmail(email)== true && isRegularPassword(password) == true ){
             return true;

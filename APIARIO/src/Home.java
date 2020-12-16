@@ -1,40 +1,84 @@
 
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import dbUtil.dbConnection;
 import java.awt.Frame;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /**
+ * CLasse principale che si occupa della logia dell'applicazione.
  *
- *
- * @author alessandro.aloise
- * @version 26.11.2020
+ * @author Alessandro.Aloise
+ * @version 16.12.2020
  */
 public class Home extends javax.swing.JPanel {
 
+    /**
+     * Dichiarazione di un istantza di una classe utile.
+     */
     CheckData checkData = new CheckData();
+
+    /**
+     * Istanziamento del frame.
+     */
     public Frame JFrame_Apiaroi = null;
+
+    /**
+     * Assengazione del frame.
+     */
     public AddArnia arina = new AddArnia(JFrame_Apiaroi);
+
+    /**
+     * Assengazione del frame.
+     */
     public AddRegina reginaP = new AddRegina(JFrame_Apiaroi);
+    /**
+     * Assengazione del frame.
+     */
     public AddTrattamento trattamento = new AddTrattamento(JFrame_Apiaroi);
+
+    /**
+     * Array contentente i valori delle arine
+     * (abitata,nome, località)
+     */
     public String[] valoriN = new String[3];
+    
+    /**
+     * Valori trattamenti.
+     * (inizio, fine,nome_trattamento, nome_arnia)
+     */
     public String[] valoriTrattamenti = new String[3];
+    
 
     private DefaultListModel model = new DefaultListModel<>();
+    
+    /**
+     * ArrayList delle arine.
+     */
     public ArrayList list = new ArrayList<>();
+
+    /**
+     * Connessione al db.
+     */
     Connection connection;
+
+    /**
+     * Id del utente loggato.
+     */
     public int idUtente;
 
     private PreparedStatement pr = null;
@@ -42,7 +86,7 @@ public class Home extends javax.swing.JPanel {
     private boolean newNota;
 
     /**
-     * Creates new form Home
+     * Costruttore della classe
      */
     public Home() {
         initComponents();
@@ -68,6 +112,9 @@ public class Home extends javax.swing.JPanel {
         riempiList();
         arinaList.setModel(model);
         repaint();
+    }
+
+    public void prova() throws IOException {
     }
 
     /**
@@ -156,6 +203,11 @@ public class Home extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Metodo che si occupa di selezionare una nota del determinato giorno.
+     *
+     * @return
+     */
     public boolean nota() {
         String dataN = calendarPanel.getSelectedDate().toString();
         String sql = "SELECT testo FROM note where nome_arnia = ?and data_nota = ?";
@@ -180,26 +232,32 @@ public class Home extends javax.swing.JPanel {
         return false;
     }
 
+    /**
+     * Metodo che genera una nuova nota.
+     */
     public void new_note() {
         String dataN = calendarPanel.getSelectedDate().toString();
-        String sql = "INSERT INTO note(testo, nome_arnia,data_nota) values (?,?,?)";
+        String sql = "INSERT INTO note(testo, nome_arnia,data_nota, id_utente) values (?,?,?,?)";
 
         try {
             pr = connection.prepareStatement(sql);
             pr.setString(1, note.getText());
             pr.setString(2, arinaList.getSelectedValue());
             pr.setString(3, dataN);
+            pr.setInt(4, idUtente);
             pr.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("error: " + ex);
         }
-        note.setText("");
 
     }
 
+    /**
+     * Metodo che si occupa di aggiornare una nota esistente.
+     */
     public void updata_note() {
         String dataN = calendarPanel.getSelectedDate().toString();
-        String sql = "UPDATE note SET testo = ? where nome_arnia = ?and data_nota = ?";
+        String sql = "UPDATE note SET testo = ? where nome_arnia = ? and data_nota = ? and id_utente = ?";
 
         try {
             pr = connection.prepareStatement(sql);
@@ -207,15 +265,59 @@ public class Home extends javax.swing.JPanel {
             System.out.println(note.getText());
             pr.setString(2, arinaList.getSelectedValue());
             pr.setString(3, dataN);
+            pr.setInt(4, idUtente);
             pr.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println("error: " + ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        note.setText("");
     }
 
+    /**
+     * Metdo che cancella l'arina dalla tabella arina.
+     */
     public void remArnia() {
         String sql = "DELETE FROM arnia where id_utente = ? and nome =? ";
+
+        try {
+            remNote();
+            remCure();
+            pr = connection.prepareStatement(sql);
+            pr.setInt(1, idUtente);
+            pr.setString(2, arinaList.getSelectedValue());
+
+            pr.executeUpdate();
+            note.setText("");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    /**
+     * Metodo che rimuove una nota.
+     */
+    public void remNote() {
+        String sql = "DELETE FROM note where id_utente = ? and nome_arnia =? ";
+
+        try {
+            pr = connection.prepareStatement(sql);
+            pr.setInt(1, idUtente);
+            pr.setString(2, arinaList.getSelectedValue());
+
+            pr.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    /**
+     * Metodo che rimuove una cura.
+     */
+    public void remCure() {
+        String sql = "DELETE FROM cure where id_utente = ? and nome_arnia =? ";
 
         try {
             pr = connection.prepareStatement(sql);
@@ -263,6 +365,9 @@ public class Home extends javax.swing.JPanel {
         });
     }
 
+    /**
+     * Metodo che si occupa di gestire il calendario.
+     */
     public void calendario() {
         note.setText("");
         checkTrattamenti();
@@ -271,6 +376,9 @@ public class Home extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Metodo per aggiungere un trattamento.
+     */
     public void addTrattamenti() {
         String sql = "INSERT INTO cure(inizio, fine,nome_trattamento, nome_arnia,id_utente) values (?,?,?,?,?)";
 
@@ -287,6 +395,9 @@ public class Home extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Metodo che controlla il termine di un trattamento e lo mostra a schermo.
+     */
     public void checkTrattamenti() {
         if (!(calendarPanel.getSelectedDate() == null)) {
             String dataN = calendarPanel.getSelectedDate().toString();
@@ -310,8 +421,12 @@ public class Home extends javax.swing.JPanel {
 
     }
 
-    public void newMeteo() {
-        String posizione = "";
+    /**
+     * Metodo che ritorna la località del meteo da guardare.
+     *
+     * @return località meteo.
+     */
+    public String meteo() {
         String sql = "SELECT località FROM arnia where nome = ?and id_utente = ?";
 
         try {
@@ -320,26 +435,60 @@ public class Home extends javax.swing.JPanel {
             pr.setInt(2, idUtente);
 
             rs = pr.executeQuery();
-            posizione = rs.getString("località");
+            return rs.getString("località");
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        return "";
+    }
+
+    /**
+     * Metodo per mappare.
+     *
+     * @param str
+     * @return
+     */
+    public static Map<String, Object> jsonToMap(String str) {
+        Map<String, Object> map = new Gson().fromJson(
+                str, new TypeToken<HashMap<String, Object>>() {
+                }.getType()
+        );
+        return map;
+    }
+
+    /**
+     * Metodo che stampa a schermo il meteo del psoto.
+     */
+    public void NewMeteo() {
+        String API_KEY = "2aef2d1da7628b1200873fc839d8cc5a";
+        String posizione = meteo();
+        String urlString = "http://api.openweathermap.org/data/2.5/weather?q=" + posizione + "&appid=" + API_KEY + "&units=metric";
         try {
-            URL url = new URL("http://pro.openweathermap.org/data/2.5/forecast/hourly?q="+posizione+",us&mode=json & appid = 2aef2d1da7628b1200873fc839d8cc5a");
-
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            BufferedReader read = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder result = new StringBuilder();
+            URL url = new URL(urlString);
+            URLConnection conn = url.openConnection();
+            BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line;
-
-            while ((line = read.readLine()) != null) {
-                System.out.println(line);
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
             }
+            rd.close();
+            //System.out.println(result);
 
-        } catch (IllegalArgumentException | IOException  ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            Map<String, Object> resMap = jsonToMap(result.toString());
+            Map<String, Object> mainMap = jsonToMap(resMap.get("main").toString());
+            Map<String, Object> windMap = jsonToMap(resMap.get("wind").toString());
+
+            checkData.alert("Luogo: " + posizione + '\n'
+                    + "Temperatura Attuale: " + mainMap.get("temp") + " C°" + '\n'
+                    + "Temperatura Massima: " + mainMap.get("temp_max") + " C°" + '\n'
+                    + "Temperatura Minima: " + mainMap.get("temp_min") + " C°" + '\n'
+                    + "Umidità Attuale: " + mainMap.get("humidity") + "%" + '\n'
+            );
+
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -510,9 +659,23 @@ public class Home extends javax.swing.JPanel {
     }//GEN-LAST:event_remArniaBActionPerformed
 
     private void meteoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meteoActionPerformed
-        newMeteo();
+        try {
+            if (!(arinaList.getSelectedValue() == null)) {
+                NewMeteo();
+            } else {
+                checkData.alert("Nessuna arina selezionata");
+            }
+            prova();
+        } catch (IOException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_meteoActionPerformed
 
+    /**
+     * Viene richiamato quando viene richiamato arina.
+     *
+     * @param evt
+     */
     private void arinaDialogPropertyChange(java.beans.PropertyChangeEvent evt) {
         if ("arina".equals(evt.getPropertyName())) {
             for (int i = 0; i < 3; i++) {
@@ -523,6 +686,11 @@ public class Home extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Viene richiamato quando viene richiamato regina.
+     *
+     * @param evt
+     */
     private void reginaDialogPropertyChange(java.beans.PropertyChangeEvent evt) {
         if ("regina".equals(evt.getPropertyName())) {
             if (arinaList.getSelectedValue() == null) {
@@ -533,6 +701,11 @@ public class Home extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Viene richiamato quando viene richiamato trattamento.
+     *
+     * @param evt
+     */
     private void trattamentoDialogPropertyChange(java.beans.PropertyChangeEvent evt) {
         if ("trattamento".equals(evt.getPropertyName())) {
             if (!(arinaList.getSelectedValue() == null)) {

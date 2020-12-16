@@ -1,7 +1,5 @@
 
 import dbUtil.dbConnection;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,16 +8,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author alessandro.aloise
+ * Clasee che controlla se l'utente é registrato.
+ * 
+ * @author Alessandro.Aloise
+ * @version 16.12.2020
  */
 public class Register extends javax.swing.JPanel {
 
+    /**
+     * Conessione al db.
+     */
     Connection connection;
+    
+   /**
+     * Dichiarazione di un istantza di una classe utile.
+     */
     CheckData checkData = new CheckData();
 
     /**
-     * Creates new form Prova
+     * MEtodo costruttore.
      */
     public Register() {
         initComponents();
@@ -33,6 +40,14 @@ public class Register extends javax.swing.JPanel {
         }
     }
 
+    /**
+     * Metodo che controlla se l'utente esiste.
+     * 
+     * @param user nome utente.
+     * @param password password del utente.
+     * @param email email del utente.
+     * @return true se l'utente esiste false se non esiste.
+     */
     public boolean isRegister(String user, String password, String email) {
         PreparedStatement pr = null;
         ResultSet rs = null;

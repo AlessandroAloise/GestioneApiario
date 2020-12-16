@@ -3,23 +3,29 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
+ * Schermata di dialogo per aggiungere un trattamento.
  *
  * @author alessandro.aloise
+ * @version 17.12.2020
  */
 public class AddTrattamento extends javax.swing.JDialog {
-    
+
     String[] valori = new String[3];
-    
 
     /**
-     * Creates new form AddTrattamento
+     * Metodo costruttore
+     *
+     * @param parent
      */
     public AddTrattamento(java.awt.Frame parent) {
         super(parent);
         initComponents();
     }
 
-        private void raiseChange() {
+    /**
+     * Metodo che si occupa di controllare se ci sono state modifiche.
+     */
+    private void raiseChange() {
         PropertyChangeEvent event = new PropertyChangeEvent(this, "trattamento", false, valori);
         PropertyChangeListener[] listeners = this.getPropertyChangeListeners();
         synchronized (listeners) {
@@ -28,19 +34,26 @@ public class AddTrattamento extends javax.swing.JDialog {
             }
         }
     }
-        
-        
-     public void setValori(){
-         valori[0] =datePickerInizio.getDate().toString();
-         valori[1]= nomeTrattamentoJ.getText();
-         valori[2] = datePickerFine.getDate().toString();
-     }
-     
-     
+
+    /**
+     * Metodo che imposta i valri all'interno dell'array.
+     */
+    public void setValori() {
+        valori[0] = datePickerInizio.getDate().toString();
+        valori[1] = nomeTrattamentoJ.getText();
+        valori[2] = datePickerFine.getDate().toString();
+    }
+
+    /**
+     * Getter per l'array.
+     *
+     * @param indice indice che ci serve conoscere dell'array.
+     * @return valore all'indice indicato.
+     */
     public String getValori(int indice) {
         return valori[indice];
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -101,33 +114,11 @@ public class AddTrattamento extends javax.swing.JDialog {
     }//GEN-LAST:event_invioActionPerformed
 
     /**
+     * Main della applicazione.
+     *
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddTrattamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddTrattamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddTrattamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddTrattamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AddTrattamento dialog = new AddTrattamento(new javax.swing.JFrame());

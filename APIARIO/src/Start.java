@@ -1,7 +1,5 @@
 
 import java.awt.event.ActionListener;
-import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Panel che si occupa della home.
@@ -11,8 +9,10 @@ import java.net.URLConnection;
  */
 public class Start extends javax.swing.JPanel {
 
-    CheckData checkData = new CheckData();
-
+    /**
+     * Generatore di eventi.
+     * @param listener 
+     */
     public void addButton1ActionListener(ActionListener listener) {
         LoginB.addActionListener(listener);
         Register.addActionListener(listener);
@@ -47,26 +47,11 @@ public class Start extends javax.swing.JPanel {
         LoginB.setBackground(new java.awt.Color(0, 0, 0));
         LoginB.setForeground(new java.awt.Color(255, 255, 255));
         LoginB.setText("Login");
-        LoginB.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                LoginBMouseClicked(evt);
-            }
-        });
-        LoginB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LoginBActionPerformed(evt);
-            }
-        });
 
         Register.setBackground(new java.awt.Color(0, 0, 0));
         Register.setForeground(new java.awt.Color(255, 255, 255));
         Register.setText("Registarti");
         Register.setMinimumSize(new java.awt.Dimension(100, 100));
-        Register.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegisterActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -92,27 +77,6 @@ public class Start extends javax.swing.JPanel {
                 .addContainerGap(105, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void LoginBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginBMouseClicked
-    }//GEN-LAST:event_LoginBMouseClicked
-
-    private void LoginBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginBActionPerformed
-        /*try {
-            URL url = new URL("https://www.bing.com/");
-
-            URLConnection connection = url.openConnection();
-            connection.connect();
-
-            System.out.println("Internet Conesso");
-
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("Erorr");
-        }*/
-    }//GEN-LAST:event_LoginBActionPerformed
-
-    private void RegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterActionPerformed
-    }//GEN-LAST:event_RegisterActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
