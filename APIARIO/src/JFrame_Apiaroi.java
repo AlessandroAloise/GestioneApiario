@@ -1,6 +1,11 @@
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Form che contine i panel.
@@ -9,15 +14,51 @@ import java.awt.event.ActionListener;
  * @version 24.09.2020
  */
 public class JFrame_Apiaroi extends javax.swing.JFrame {
-    
+
     public int id;
+    CheckData checkData = new CheckData();
 
     /**
      * Creates new form JFrame_Apiaroi
      */
     public JFrame_Apiaroi() {
         initComponents();
+        connessione();
 
+    }
+
+public void connessione() {
+        try {
+            URL url = new URL("http://www.google.com");
+            URLConnection connection = url.openConnection();
+            connection.connect();
+            scaricaDB();
+        } catch (MalformedURLException e) {
+            checkData.alert("ATTENZIONE NON CONESSO A INTERNET" + '\n'
+                    + "Il programma funzionerà solo se lo avevi già avviato con internet"
+                    +'\n'
+                    + "Il programma salverà solo le informazioni in locale"
+            );
+        } catch (IOException e) {
+            checkData.alert("ATTENZIONE NON CONESSO A INTERNET" + '\n'
+                    + "Il programma funzionerà solo se lo avevi già avviato con internet"
+                    +'\n'
+                    + "Il programma salverà solo le informazioni in locale"
+            );
+        }
+    }
+
+
+    public void scaricaDB() {
+        try ( BufferedInputStream in = new BufferedInputStream(new URL("http://samtinfo.ch/i17aloale/up/Apiario.sqlite").openStream());  FileOutputStream fileOutputStream = new FileOutputStream("Apiario.sqlite")) {
+            byte dataBuffer[] = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
+            System.out.println("non va");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -72,8 +113,8 @@ public class JFrame_Apiaroi extends javax.swing.JFrame {
 
     private void loginPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_loginPropertyChange
         if ("login".equals(evt.getPropertyName())) {
-            if ((boolean)evt.getNewValue()) {
-                id =login.getUtente();
+            if ((boolean) evt.getNewValue()) {
+                id = login.getUtente();
                 home.setUserId(id);
                 login.setVisible(false);
                 getContentPane().add(home, java.awt.BorderLayout.CENTER);
