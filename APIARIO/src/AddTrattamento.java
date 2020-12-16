@@ -13,9 +13,7 @@ public class AddTrattamento extends javax.swing.JDialog {
     String[] valori = new String[3];
 
     /**
-     * Metodo costruttore
-     *
-     * @param parent
+     * Creates new form AddTrattamento
      */
     public AddTrattamento(java.awt.Frame parent) {
         super(parent);

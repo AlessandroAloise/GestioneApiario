@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * Classe che si occupa di verificare i dati.
  * 
  * @author alessandro.aloise
- * @version 17.12.2020
+ * @version 08.10.2020
  */
 public class CheckData {
 
@@ -80,7 +80,7 @@ public class CheckData {
         }  
     }
     
-    /**
+        /**
      * Creazione dell'utente.
      * 
      * @param nome Nome della persona.
@@ -96,11 +96,5 @@ public class CheckData {
         }else{
             return false;
         }
-    }
-    
-    
-    public void connect(){
-        
-    }
-    
+    }    
 }

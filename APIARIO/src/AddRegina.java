@@ -3,8 +3,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- *Schermata di dialogo per aggiungere una regina.
- * 
+ *
  * @author alessandro.aloise
  * @version 17.12.2020
  */
@@ -20,7 +19,7 @@ public class AddRegina extends javax.swing.JDialog {
         initComponents();
     }
 
-    /**
+        /**
      * Metodo che si occupa di controllare se ci sono state modifiche.
      */
     private void raiseChange() {
