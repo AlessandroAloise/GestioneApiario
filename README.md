@@ -17,7 +17,7 @@ Data di consegna: 17.12.2020
 - [Diari](https://github.com/AlessandroAloise/GestioneApiario/tree/master/Diari)
 
 #### Mandato:
-[Mandato:](https://github.com/AlessandroAloise/GestioneApiario/blob/master/Quaderno%20dei%20compiti/QdC_Primo%20Semestre%20-%20GestioneApiario.docx)
+-[Mandato:](https://github.com/AlessandroAloise/GestioneApiario/blob/master/Quaderno%20dei%20compiti/QdC_Primo%20Semestre%20-%20GestioneApiario.docx)
 
 
 
